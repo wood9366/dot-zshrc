@@ -1,5 +1,4 @@
 # common
-export TERM=xterm-256color 
 export PATH=$HOME/scripts:$PATH
 
 # home brew
