@@ -13,16 +13,17 @@ if which plenv > /dev/null; then eval "$(plenv init - zsh)"; fi
 alias cpanm="cpanm --mirror http://mirrors.shu.edu.cn/CPAN/"
 
 # proxy
-proxy_vars=('ALL_PROXY' 'all_proxy')
+PROXY_VARS=('ALL_PROXY' 'all_proxy')
 
 function setproxy() {
-	for var in ${proxy_vars[@]}; do
-		export $var=socks5://127.0.0.1:1080
+	PROXY_PORT=${1:=1080}
+	for VAR in ${PROXY_VARS[@]}; do
+		export $VAR=socks5://127.0.0.1:$PROXY_PORT
 	done
 }
 
 function noproxy() {
-	for var in ${proxy_vars[@]}; do
-		unset $var
+	for VAR in ${PROXY_VARS[@]}; do
+		unset $VAR
 	done
 }
