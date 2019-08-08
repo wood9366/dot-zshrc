@@ -1,26 +1,22 @@
-# common
-export PATH=$HOME/scripts:$PATH
 
-# home brew
-export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles
+# common
+export PATH=$HOME/scripts:$HOME/bin:$PATH
+
+# homebrew
+export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles
+
+# nodenv
+if which nodenv > /dev/null; then eval "$(nodenv init -)"; fi
 
 # plenv
 export PERL_BUILD_CPAN_MIRROR=http://mirrors.163.com/cpan/
-export PATH="$HOME/.plenv/bin:$PATH"
-if which plenv > /dev/null; then eval "$(plenv init - zsh)"; fi
+if which plenv > /dev/null; then eval "$(plenv init -)"; fi
 
-# proxy
-PROXY_VARS=('ALL_PROXY' 'all_proxy')
+# pyenv
+if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
 
-function setproxy() {
-	PROXY_PORT=${1:=1080}
-	for VAR in ${PROXY_VARS[@]}; do
-		export $VAR=socks5://127.0.0.1:$PROXY_PORT
-	done
-}
+# charset to utf8
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
 
-function noproxy() {
-	for VAR in ${PROXY_VARS[@]}; do
-		unset $VAR
-	done
-}
+TERM=xterm-256color
