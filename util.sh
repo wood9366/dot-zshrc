@@ -75,3 +75,49 @@ genpasswd() {
     pbpaste > ~/pass/${3:-prev};
     pbpaste;
 }
+
+# unity
+function unity() {
+    proj_dir=$1
+
+    if [ -z $proj_dir ]; then
+        echo "E> No Project $proj_dir";
+        return
+    fi
+
+    echo "-> Unity Project: $proj_dir"
+
+    proj_ver_file="$dir/ProjectSettings/Projectversion.txt"
+    ver="2019.1.14f1"
+
+    if [ -e $proj_ver_file ]; then
+        ver=$(cat $proj_ver_file | head -1 | cut -d ' ' -f 2)
+        echo "-> Unity Version: $ver";
+    else
+        echo "-> Not Found Unity Version, Default: $ver"
+    fi
+
+    unity_path="/Applications/Unity/Hub/Editor/$ver"
+
+    if [ ! -e "$unity_path" ]; then
+        unity_path=""
+    fi
+
+    if [ ! "$unity_path" ]; then
+        unity_path="/Applications/Unity_$ver"
+
+        if [ ! -e "$unity_path" ]; then
+            unity_path=""
+        fi
+    fi
+
+    if [ ! "$unity_path" ]; then
+        echo "E> No Unity Version $ver"
+    fi
+
+    target=${TARGET:-iOS}
+
+    echo "-> Build Target: $target"
+
+    nohup $unity_path/Unity.app/Contents/MacOS/Unity -buildTarget $target -projectPath $proj_dir > ~/temp/unity_$ver.log 2>&1 &
+}
