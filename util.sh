@@ -87,7 +87,7 @@ function unity() {
 
     echo "-> Unity Project: $proj_dir"
 
-    proj_ver_file="$dir/ProjectSettings/Projectversion.txt"
+    proj_ver_file="$proj_dir/ProjectSettings/Projectversion.txt"
     ver="2019.1.14f1"
 
     if [ -e $proj_ver_file ]; then
