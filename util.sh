@@ -1,10 +1,10 @@
 # proxy
-PROXY_VARS=('ALL_PROXY' 'all_proxy')
+PROXY_VARS=('http_proxy' 'https_proxy')
 
 function setproxy() {
-	PROXY_PORT=${1:=1080}
+	PROXY_PORT=${1:=1087}
 	for VAR in ${PROXY_VARS[@]}; do
-		export $VAR=socks5://127.0.0.1:$PROXY_PORT
+		export $VAR=http://127.0.0.1:$PROXY_PORT
 	done
 }
 
@@ -78,7 +78,16 @@ genpasswd() {
 
 # unity
 function unity() {
-    proj_dir=$1
+    op=$1
+    op_create=0
+    op_open=1
+
+    case $op in
+	create | open) ;;
+	*) echo "E> invalid operation (create|open)"; return; ;;
+    esac
+
+    proj_dir=$2
 
     if [ -z $proj_dir ]; then
         echo "E> No Project $proj_dir";
@@ -119,5 +128,8 @@ function unity() {
 
     echo "-> Build Target: $target"
 
-    nohup $unity_path/Unity.app/Contents/MacOS/Unity -buildTarget $target -projectPath $proj_dir > ~/temp/unity_$ver.log 2>&1 &
+    case $op in
+	open) nohup $unity_path/Unity.app/Contents/MacOS/Unity -buildTarget $target -projectPath $proj_dir > ~/temp/unity_$ver.log 2>&1 & ;;
+	create) nohup $unity_path/Unity.app/Contents/MacOS/Unity -buildTarget $target -createproject $proj_dir > ~/temp/unity_$ver.log 2>&1 & ;;
+    esac
 }

@@ -1,5 +1,5 @@
 # cpanm
-alias cpanm="cpanm --mirror http://mirrors.shu.edu.cn/CPAN/"
+alias cpanm="cpanm --mirror http://mirrors.163.com/cpan/"
 
 # editor
 VIM="/Applications/MacVim.app/Contents/MacOS/Vim"
