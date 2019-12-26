@@ -106,13 +106,11 @@ function unity() {
         echo "-> Not Found Unity Version, Default: $ver"
     fi
 
+    ver=${3:-"$ver"}
+
     unity_path="/Applications/Unity/Hub/Editor/$ver"
 
     if [ ! -e "$unity_path" ]; then
-        unity_path=""
-    fi
-
-    if [ ! "$unity_path" ]; then
         unity_path="/Applications/Unity_$ver"
 
         if [ ! -e "$unity_path" ]; then
@@ -120,16 +118,23 @@ function unity() {
         fi
     fi
 
-    if [ ! "$unity_path" ]; then
-        echo "E> No Unity Version $ver"
+    if [ -z "$unity_path" ]; then
+        echo "E> No Unity Version $unity_path"
+        return 1
     fi
 
     target=${TARGET:-iOS}
 
     echo "-> Build Target: $target"
 
+    TEMP="$HOME/temp"
+
+    if [ ! -e "$TEMP" ]; then
+        mkdir -p $TEMP
+    fi
+
     case $op in
-	open) nohup $unity_path/Unity.app/Contents/MacOS/Unity -buildTarget $target -projectPath $proj_dir > ~/temp/unity_$ver.log 2>&1 & ;;
-	create) nohup $unity_path/Unity.app/Contents/MacOS/Unity -buildTarget $target -createproject $proj_dir > ~/temp/unity_$ver.log 2>&1 & ;;
+	open) nohup $unity_path/Unity.app/Contents/MacOS/Unity -buildTarget $target -projectPath $proj_dir > $TEMP/unity_$ver.log 2>&1 & ;;
+	create) nohup $unity_path/Unity.app/Contents/MacOS/Unity -buildTarget $target -createproject $proj_dir > $TEMP/unity_$ver.log 2>&1 & ;;
     esac
 }
