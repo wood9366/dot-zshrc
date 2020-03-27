@@ -138,3 +138,16 @@ function unity() {
 	create) nohup $unity_path/Unity.app/Contents/MacOS/Unity -buildTarget $target -createproject $proj_dir > $TEMP/unity_$ver.log 2>&1 & ;;
     esac
 }
+
+function docker-machine-env() {
+    if [ ! -z $DOCKER_MACHINE_NAME ]; then
+        echo Docker Environment under $DOCKER_MACHINE_NAME
+    fi
+}
+
+function docker-machine-env-reset() {
+    unset DOCKER_TLS_VERIFY
+    unset DOCKER_HOST
+    unset DOCKER_CERT_PATH
+    unset DOCKER_MACHINE_NAME
+}
