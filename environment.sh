@@ -3,7 +3,10 @@
 export PATH=$HOME/scripts:$HOME/bin:$PATH
 
 # homebrew
-export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles
+export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles
+
+# cpanm
+export PERL_CPANM_OPT="--mirror http://mirrors.163.com/cpan/"
 
 # nodenv
 if which nodenv > /dev/null; then eval "$(nodenv init -)"; fi
