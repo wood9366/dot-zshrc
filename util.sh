@@ -2,9 +2,9 @@
 PROXY_VARS=('http_proxy' 'https_proxy')
 
 function setproxy() {
-	PROXY_PORT=${1:=1087}
+	PROXY_PORT=${1:=1086}
 	for VAR in ${PROXY_VARS[@]}; do
-		export $VAR=http://127.0.0.1:$PROXY_PORT
+		export $VAR=socks5://127.0.0.1:$PROXY_PORT
 	done
 }
 
@@ -134,8 +134,8 @@ function unity() {
     fi
 
     case $op in
-	open) nohup $unity_path/Unity.app/Contents/MacOS/Unity -buildTarget $target -projectPath $proj_dir > $TEMP/unity_$ver.log 2>&1 & ;;
-	create) nohup $unity_path/Unity.app/Contents/MacOS/Unity -buildTarget $target -createproject $proj_dir > $TEMP/unity_$ver.log 2>&1 & ;;
+	open) nohup $unity_path/Unity.app/Contents/MacOS/Unity -buildTarget $target -projectPath $proj_dir > $TEMP/unity_$ver.log ;;
+	create) nohup $unity_path/Unity.app/Contents/MacOS/Unity -buildTarget $target -createproject $proj_dir > $TEMP/unity_$ver.log ;;
     esac
 }
 
