@@ -2,9 +2,20 @@
 PROXY_VARS=('http_proxy' 'https_proxy')
 
 function setproxy() {
-	PROXY_PORT=${1:=1086}
+	PROXY_PROTOCOL=${1:='socks5'}
+
+    DEFAULT_PORT=1080
+
+    if [ "$PROXY_PROTOCOL" = "socks5" ]; then
+        DEFAULT_PORT=1086
+    elif [ "$PROXY_PROTOCOL" = "http" ]; then
+        DEFAULT_PORT=1087
+    fi
+
+    PROXY_PORT=${2:=$DEFAULT_PORT}
+
 	for VAR in ${PROXY_VARS[@]}; do
-		export $VAR=socks5://127.0.0.1:$PROXY_PORT
+		export $VAR=$PROXY_PROTOCOL://127.0.0.1:$PROXY_PORT
 	done
 }
 
