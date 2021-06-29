@@ -21,7 +21,13 @@ export PERL_BUILD_CPAN_MIRROR=http://mirrors.163.com/cpan/
 if which plenv > /dev/null; then eval "$(plenv init -)"; fi
 
 # pyenv
-if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
+if which pyenv > /dev/null
+then
+    export PYENV_ROOT="$HOME/.pyenv"
+    export PATH="$PYENV_ROOT/bin:$PATH"
+    eval "$(pyenv init --path)"
+    eval "$(pyenv init -)";
+fi
 
 # rbenv
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
